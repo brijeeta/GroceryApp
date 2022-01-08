@@ -1,4 +1,4 @@
-import React from 'react';
+
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -14,3 +14,15 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+=======
+import App from './App';
+import ReactDOM from 'react-dom';
+//import css
+
+
+// ReactDOM.render(
+//     <React.StrictMode>
+//         <App />
+//     </React.StrictMode>
+//     document.getElementById('') <-- this id can be found in public/index.html
+// );

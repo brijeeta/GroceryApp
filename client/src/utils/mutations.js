@@ -1,5 +1,3 @@
-
-  
 import { gql } from '@apollo/client';
 
 //basic setup
