@@ -1,4 +1,4 @@
-const express = requrie('express');
+const express = require('express');
 const path = require('path');
 const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schemas');
@@ -16,12 +16,12 @@ server.applyMiddleware({ app });
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-if (process.allowedNodeEnvironmentFlags.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/build')));
-}
+// if (process.allowedNodeEnvironmentFlags.NODE_ENV === 'production') {
+//     app.use(express.static(path.join(__dirname, '../client/public')));
+// }
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+    res.sendFile(path.join(__dirname, '../client/public/index.html'));
 });
 
 db.once('open', () => {
