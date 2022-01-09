@@ -13,8 +13,9 @@
   "dependencies": {
     "apollo-server-express": "^2.19.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.6",
-    "graphql": "^15.5.1"
+    "graphql": "^15.5.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
