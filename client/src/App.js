@@ -1,31 +1,33 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-//import pages
-import Body from './Body'
-import Nav from './pages/components/Nav';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import { ApolloProvider } from "@apollo/react-hooks";
+import ApolloClient from 'apollo-boost';
 
 const client = new ApolloClient({
-    uri: '/graphql',
-    cache: new InMemoryCache(),
+  request: (operation) => {
+    const token = localStorage.getItem("id_token");
+
+    operation.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
+  uri: "/graphql",
 });
 
 function App() {
-    return (
-        <ApolloProvider client={client}>
-            <Router>
-                {/* possible styling here */}
-                <div className="">
-                    <Switch>
-                        {/* routes to each page go here */}
-                        <Route exact path="/">
-                            <PageNameHere />
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
-        </ApolloProvider>
-    );
+
+  return (
+    <ApolloProvider client={client}>
+      <Router>
+        <>
+          <Navbar />
+        </>
+      </Router>
+    </ApolloProvider>
+  );
 }
 
 export default App;
