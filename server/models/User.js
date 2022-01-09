@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const List = require('./List');
 
 const userSchema = new Schema({
-    userName: {
+    username: {
         type: String,
         required: true,
         trim: true
@@ -23,7 +23,7 @@ const userSchema = new Schema({
     lists: [List.schema]
 });
 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
     if (this.isNew || this.isModified('password')) {
         const saltRounds = 10;
         this.password = await bcrypt.hash(this.password, saltRounds);
@@ -32,8 +32,8 @@ userSchema.pre('save', async function(next) {
     next();
 });
 
-userSchema.methods.isCorrectPassword = async function(password) {
-    return await bcrypt.compare(password, this.password);  
+userSchema.methods.isCorrectPassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
 };
 
 const User = mongoose.model('User', userSchema);
