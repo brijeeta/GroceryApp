@@ -1,5 +1,6 @@
 {
     "name": "groceryapp",
+    "homepage": "",
     "version": "1.0.0",
     "engines": {
         "node": "14.17.6"
@@ -16,9 +17,12 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "concurrently": "^5.3.0"
+        "concurrently": "^5.3.0",
+        "favicons-webpack-plugin": "^5.0.2",
+        "webpack-pwa-manifest": "^4.3.0"
     },
     "dependencies": {
-        "@apollo/react-hooks": "^4.0.0"
+        "@apollo/react-hooks": "^4.0.0",
+        "dotenv": "^11.0.0"
     }
 }
