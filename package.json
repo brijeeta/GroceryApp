@@ -23,6 +23,6 @@
     },
     "dependencies": {
         "@apollo/react-hooks": "^4.0.0",
-        "dotenv": "^11.0.0"
+        "axios": "^0.24.0"
     }
 }
