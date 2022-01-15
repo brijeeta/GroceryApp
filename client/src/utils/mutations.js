@@ -62,32 +62,32 @@ export const DELETE_PRODUCT = gql`
   }
 `;
 
-export const ADD_LIST = gql`
-  mutation addList(name: String!, products [ID]!) {
-    addList(name: String!, products [ID]!) {
-      name
-      products {
-        name
-        description
-        price
-        quantity
-        image
-      }
-    }
-  }
-`;
+// export const ADD_LIST = gql`
+//   mutation addList(name: String!, products [ID]!) {
+//     addList(name: String!, products [ID]!) {
+//       name
+//       products {
+//         name
+//         description
+//         price
+//         quantity
+//         image
+//       }
+//     }
+//   }
+// `;
 
-export const REMOVE_LIST = gql`
-  mutation removeList(name: String!, products [ID]!) {
-    removeList(name: String! products [ID]!) {
-      name
-      products {
-        name
-        description
-        price
-        quantity
-        image
-      }
-    }
-  }
-`;
+// export const REMOVE_LIST = gql`
+//   mutation removeList(name: String!, products [ID]!) {
+//     removeList(name: String! products [ID]!) {
+//       name
+//       products {
+//         name
+//         description
+//         price
+//         quantity
+//         image
+//       }
+//     }
+//   }
+// `;

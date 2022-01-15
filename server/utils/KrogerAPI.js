@@ -35,7 +35,9 @@ const krogerAuth = async () => {
 }
 
 const krogerSearch = (term) => {
+    console.log('search start');
     const token = new Promise (krogerAuth);
+    console.log('auth cleared');
     token.then ( token => {
         return axios({
             method: 'get',
@@ -46,6 +48,5 @@ const krogerSearch = (term) => {
     }).then(response => response.data);
         // return response;
 }
-console.log(krogerSearch('milk'));
 
 module.exports = krogerSearch;
