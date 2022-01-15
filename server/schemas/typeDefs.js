@@ -33,11 +33,19 @@ const typeDefs = gql`
         user: User
     }
 
+    type KrogerData {
+        productId: Int
+        description: String
+        price: Float
+        category: String
+    }
+
     type Query {
         categories: [Category]
         products(category: ID, name: String): [Product]
         product(_id: ID!): List
         user: User
+        krogerSearch(term: String!): [KrogerData]
     }
 
     type Mutation {
