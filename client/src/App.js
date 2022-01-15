@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Home from './pages/home';
 import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from 'apollo-boost';
 
@@ -24,6 +25,7 @@ function App() {
       <Router>
         <>
           <Navbar />
+          <Home />
         </>
       </Router>
     </ApolloProvider>
