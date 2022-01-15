@@ -5,5 +5,58 @@
 
 .NavBar .nav {
   height: 100%;
+  width: 100%;
+  background-color: #303030;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.NavBar .nav .container {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 90%;
+  max-width: 1600px;
+  background-color: whitesmoke;
+  margin: 0;
+  padding: 0;
+}
+
+.NavBar .nav .container .logo {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 12%;
+}
+
+.NavBar .nav .container .searchBar {
+  background-color: red;
+  width: 72%;
+  height: 100%;
+}
+
+.NavBar .nav .container .userGUI {
+  background-color: blue;
+  width: 12%;
+  height: 100%;
 }
 /*# sourceMappingURL=NavBar.css.map */
