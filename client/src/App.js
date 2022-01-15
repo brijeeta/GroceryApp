@@ -27,7 +27,7 @@ function App() {
           <Navbar />
           <Switch>
             <Route exact path='/' component={SearchItems} />
-            <Route exact path='/saved' component={SavedCartItems} />
+            {/* <Route exact path='/saved' component={SavedCartItems} /> */}
             <Route render={() => <h1 className='display-2'>Wrong page!</h1>} />
           </Switch>
         </>
