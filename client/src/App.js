@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from 'apollo-boost';
-import { searchKroger } from './utils/API';
 import SavedCartItems from './pages/SavedCartItems';
 import SearchItems from './pages/SearchItems';
 
