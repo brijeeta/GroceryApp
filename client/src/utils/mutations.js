@@ -25,3 +25,69 @@ export const ADD_USER = gql`
   }
 `;
 
+export const SAVE_PRODUCT = gql`
+  mutation saveProduct($product: SavedProductInput!) {
+    saveProduct(product: $product) {
+      username
+      email
+      lists {
+        products {
+          name
+          description
+          price
+          quantity
+          image
+        }
+      }
+    }
+  }
+`;
+
+export const DELETE_PRODUCT = gql`
+  mutation removeProduct($productId: String!) {
+    removeProduct(productId: $productId) {
+      username
+      email
+      lists {
+        name
+        products {
+          name
+          description
+          price
+          quantity
+          image
+        }
+      }
+    }
+  }
+`;
+
+// export const ADD_LIST = gql`
+//   mutation addList(name: String!, products [ID]!) {
+//     addList(name: String!, products [ID]!) {
+//       name
+//       products {
+//         name
+//         description
+//         price
+//         quantity
+//         image
+//       }
+//     }
+//   }
+// `;
+
+// export const REMOVE_LIST = gql`
+//   mutation removeList(name: String!, products [ID]!) {
+//     removeList(name: String! products [ID]!) {
+//       name
+//       products {
+//         name
+//         description
+//         price
+//         quantity
+//         image
+//       }
+//     }
+//   }
+// `;

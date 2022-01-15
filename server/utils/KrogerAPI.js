@@ -21,6 +21,7 @@ const krogerAuth = async () => {
 
 }
 
+
 const krogerFetch = async (term) => {
     
     const token = await krogerAuth();
@@ -32,6 +33,7 @@ const krogerFetch = async (term) => {
     });
     
     return response.data.data;
+
 }
 
 
