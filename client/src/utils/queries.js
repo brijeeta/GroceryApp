@@ -31,3 +31,14 @@ export const GET_ALL_PRODUCTS = gql`
         }
     }
 `;
+
+export const KROGER_SEARCH = gql`
+    query krogerSearch($term: String!) {
+        krogerSearch(term: $term) {
+                productId
+                description
+                price
+                category
+        }
+    }
+`
