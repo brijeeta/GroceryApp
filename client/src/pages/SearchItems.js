@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Jumbotron,
     Container,
@@ -8,13 +8,23 @@ import {
     Card,
     CardColumns,
 } from "react-bootstrap";
-import { searchKroger } from "../utils/API";
+import { saveProductIds, getSavedProductIds } from "../utils/localStorage";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { SAVE_PRODUCT } from "../utils/mutations";
+import { GET_ME, KROGER_SEARCH } from "../utils/queries";
 
 const SearchItems = () => {
-    // create state for holding returned google api data
-    const [searchedItems, setSearchedItems] = useState([]);
-    // create state for holding our search field data
+    const [saveProduct] = useMutation(SAVE_PRODUCT);
     const [searchInput, setSearchInput] = useState("");
+    const { loading, data } = useQuery(KROGER_SEARCH, {
+        variables: {term: searchInput}
+    });
+    const searchedItems = data?.krogerSearch || [];
+    const [savedProductIds, setSavedProductIds] = useState(getSavedProductIds());
+
+    useEffect(() => {
+        return () => saveProductIds(savedProductIds);
+    });
 
 
     // create method to search for items and set state on form submit
@@ -26,14 +36,9 @@ const SearchItems = () => {
         }
 
         try {
-            const response = await searchKroger(searchInput);
 
-            if (!response.ok) {
-                throw new Error("something went wrong!");
-            }
+            setSearchInput('');
 
-            const { items } = await response.json();
-            console.log(items);
         } catch (err) {
             console.error(err);
         }
