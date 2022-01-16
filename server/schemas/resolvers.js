@@ -28,19 +28,20 @@ const resolvers = {
                 let outputData = [];
                 krogerData.forEach(data => {
                     console.log(JSON.stringify(data, null, 2));
-                    
+
                     let item = {
                         productId: data.productId,
                         description: data.description,
-                        price: 0,
+                        image: data.images[0].sizes[0].url,
                         category: data.categories[0],
+
                     }
                     outputData.push(item);
-            });
-            return outputData;
-        } catch (err) {
-            console.log(err);
-        }
+                });
+                return outputData;
+            } catch (err) {
+                console.log(err);
+            }
         }
 
     },

@@ -31,10 +31,10 @@ const typeDefs = gql`
     }
 
     type KrogerData {
-        productId: Int
+        productId: Float
         description: String
-        price: Float
         category: String
+        image: String
     }
 
     type Query {
