@@ -1,8 +1,6 @@
 const axios = require ('axios');
-
+require('dotenv').config();
 const { KROGER_CLIENT_ID, KROGER_CLIENT_SECRET } = process.env;
-
-
 
 const krogerAuth = async () => {
 

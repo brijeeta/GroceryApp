@@ -18,22 +18,29 @@ const resolvers = {
             throw new AuthenticationError("User not logged in");
         },
         krogerSearch: async (parent, args) => {
-            
-            const krogerData = await krogerFetch(args.term);
-            //console.log(krogerData);
-            let outputData = [];
-            krogerData.forEach(data => {
-                console.log(JSON.stringify(data, null, 2));
-                
-                let item = {
-                    productId: data.productId,
-                    description: data.description,
-                    price: 0,
-                    category: data.categories[0],
+            try {
+                console.log(args);
+                if (!args.term) {
+                    return;
                 }
-                outputData.push(item);
+                const krogerData = await krogerFetch(args.term);
+                console.log(krogerData);
+                let outputData = [];
+                krogerData.forEach(data => {
+                    console.log(JSON.stringify(data, null, 2));
+                    
+                    let item = {
+                        productId: data.productId,
+                        description: data.description,
+                        price: 0,
+                        category: data.categories[0],
+                    }
+                    outputData.push(item);
             });
             return outputData;
+        } catch (err) {
+            console.log(err);
+        }
         }
 
     },
