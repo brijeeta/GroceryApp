@@ -1,6 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Product, Category, List } = require("../models");
 const { signToken } = require("../utils/auth");
+const krogerFetch = require("../utils/KrogerAPI");
 
 
 const resolvers = {
@@ -16,6 +17,33 @@ const resolvers = {
 
             throw new AuthenticationError("User not logged in");
         },
+        krogerSearch: async (parent, args) => {
+            try {
+                console.log(args);
+                if (!args.term) {
+                    return;
+                }
+                const krogerData = await krogerFetch(args.term);
+                console.log(krogerData);
+                let outputData = [];
+                krogerData.forEach(data => {
+                    console.log(JSON.stringify(data, null, 2));
+
+                    let item = {
+                        productId: data.productId,
+                        description: data.description,
+                        image: data.images[0].sizes[0].url,
+                        category: data.categories[0],
+
+                    }
+                    outputData.push(item);
+                });
+                return outputData;
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
     },
     Mutation: {
         addUser: async (parent, args) => {

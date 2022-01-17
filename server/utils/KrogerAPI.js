@@ -1,51 +1,38 @@
 const axios = require ('axios');
-
+require('dotenv').config();
 const { KROGER_CLIENT_ID, KROGER_CLIENT_SECRET } = process.env;
 
 const krogerAuth = async () => {
-    const name = 'Kroger_Token';
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    let krogerToken = '';
 
-    for (i=0; i<ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            krogerToken = c.substring(name.length, c.length);
-        } else {
-            krogerToken = '';
-        }
-
-    }
-    if (krogerToken === '') {
+    try {
         const response = await axios({
             method: 'post',
             url: 'https://api.kroger.com/v1/connect/oauth2/token',
             headers: {'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization' : `Basic ${btoa(KROGER_CLIENT_ID + ':' + KROGER_CLIENT_SECRET)}`},
+                'Authorization' : `Basic ${Buffer.from(KROGER_CLIENT_ID + ':' + KROGER_CLIENT_SECRET).toString('base64')}`},
             data: 'grant_type=client_credentials&scope=product.compact' 
-        });
-    krogerToken = response.data.access_token;
-    document.cookie = name + '=' + krogerToken + ';expires=' + response.data.expires_in;
-    } 
-    return krogerToken;
+        });  
+        return response.data.access_token
+    } catch (err) {
+        console.log(err.message);
+    }
+
 }
 
-const krogerSearch = (term) => {
-    const token = new Promise (krogerAuth);
-    token.then ( token => {
-        return axios({
-            method: 'get',
-            url: `https://api.kroger.com/v1/products?filter.limit=10&filter.term=${term}`,
-            headers: { 'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`}   
-        })
-    }).then(response => response.data);
-        // return response;
-}
-console.log(krogerSearch('milk'));
 
-module.exports = krogerSearch;
+const krogerFetch = async (term) => {
+    
+    const token = await krogerAuth();
+    const response = await axios({
+        method: 'get',
+        url: `https://api.kroger.com/v1/products?filter.limit=10&filter.term=${term}`,
+        headers: { 'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`}   
+    });
+    
+    return response.data.data;
+
+}
+
+
+module.exports = krogerFetch;
