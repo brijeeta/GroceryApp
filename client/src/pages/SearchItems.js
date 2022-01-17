@@ -12,14 +12,14 @@ import { saveProductIds, getSavedProductIds } from "../utils/localStorage";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { SAVE_PRODUCT } from "../utils/mutations";
 import { GET_ME, KROGER_SEARCH } from "../utils/queries";
+import Auth from '../utils/auth';
+import { getDescription } from "graphql";
 
 const SearchItems = () => {
     const [saveProduct] = useMutation(SAVE_PRODUCT);
     const [searchInput, setSearchInput] = useState("");
-    const { loading, data } = useQuery(KROGER_SEARCH, {
-        variables: {term: searchInput}
-    });
-    const searchedItems = data?.krogerSearch || [];
+    const [searchedItems, setSearchedItems] = useState([]);
+    //const searchedItems = data?.krogerSearch || [];
     const [savedProductIds, setSavedProductIds] = useState(getSavedProductIds());
 
     useEffect(() => {
@@ -36,14 +36,54 @@ const SearchItems = () => {
         }
 
         try {
-
+            const response = await useQuery(KROGER_SEARCH, {
+                variables: {term: searchInput}
+            });
             setSearchInput('');
 
+            if (!response.ok) {
+                throw new Error('Something went wrong!');
+            }
+
+            const { items } = await response.json();
+
+            const groceryItems = items.map((item) => ({
+                productId: item.productId,
+                description: item.description || '',
+                category: item.category || '',
+                image: item.image || '',
+            }));
+
+            setSearchedItems(groceryItems);
+            setSearchInput('');
+        } catch (err) {
+            console.error(err);
+        }
+        
+
+    };
+
+    const handleSaveItem = async (itemId) => {
+
+        const itemToSave = searchedItems.find((item) => item.productId === itemId);
+        
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+            return false;
+        }
+
+        try {
+
+            const {data} = await saveProduct({
+                variables: { input: itemToSave }
+            });
+
+            setSavedProductIds([...savedProductIds, itemToSave.productId]);
         } catch (err) {
             console.error(err);
         }
     };
-
 
     return (
         <>
@@ -78,6 +118,28 @@ const SearchItems = () => {
                         ? `Viewing ${searchedItems.length} results:`
                         : "Search for an item to begin"}
                 </h5>
+                <CardColumns>
+                    {searchedItems.map((item) => {
+                        return (
+                            <Card key={item.productId} border='dark'>
+                                {item.image ? (
+                                    <Card.Img src={item.image} alt={`The image for ${item.description}`} variant='top' />
+                                ) : null}
+                                <Card.Body>
+                                    <Card.Title>{item.description}</Card.Title>
+                                    <Button
+                                        disabled={saveProductIds?.som((savedItemId) => savedItemId === item.productId)}
+                                        className='btn-block btn-info'
+                                        onClisk={() => handleSaveItem(item.productId)}>
+                                        {savedProductIds?.some((savedItemId) => savedItemId === item.productId)
+                                            ? 'This item has already been saved!'
+                                            : 'Save this Item!'}
+                                        </Button>
+                                </Card.Body>
+                            </Card>
+                        )
+                    })}
+                </CardColumns>
             </Container>
         </>
     );
