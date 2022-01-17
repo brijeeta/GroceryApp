@@ -33,7 +33,6 @@ const typeDefs = gql`
     type KrogerData {
         productId: Float
         description: String
-        price: Float
         category: String
         image: String
     }

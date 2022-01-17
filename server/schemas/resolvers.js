@@ -34,6 +34,7 @@ const resolvers = {
                         description: data.description,
                         image: data.images[0].sizes[0].url,
                         category: data.categories[0],
+
                     }
                     outputData.push(item);
                 });
