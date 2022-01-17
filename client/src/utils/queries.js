@@ -37,7 +37,6 @@ export const KROGER_SEARCH = gql`
         krogerSearch(term: $term) {
                 productId
                 description
-                price
                 category
         }
     }
