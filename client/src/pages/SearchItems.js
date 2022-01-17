@@ -83,8 +83,11 @@ const SearchItems = () => {
                 <div>
                     {searchedItems.map(item => 
                         <p key={item.productId}>
-                            {item.description}
-                        </p>)}
+                            {item.description} <br />
+                            {item.category}
+                        </p>
+
+                    )}
                 </div>
             </Container>
         </>
