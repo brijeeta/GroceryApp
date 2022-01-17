@@ -20,6 +20,7 @@ const SearchItems = () => {
         variables: {term: searchInput}
     });
     const searchedItems = data?.krogerSearch || [];
+    console.log(data);
     const [savedProductIds, setSavedProductIds] = useState(getSavedProductIds());
 
     useEffect(() => {
@@ -28,21 +29,21 @@ const SearchItems = () => {
 
 
     // create method to search for items and set state on form submit
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
+    // const handleFormSubmit = async (event) => {
+    //     event.preventDefault();
 
-        if (!searchInput) {
-            return false;
-        }
+    //     if (!searchInput) {
+    //         return false;
+    //     }
 
-        try {
+    //     try {
 
-            setSearchInput('');
+    //         setSearchInput('');
 
-        } catch (err) {
-            console.error(err);
-        }
-    };
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // };
 
 
     return (
@@ -50,7 +51,7 @@ const SearchItems = () => {
             <Jumbotron fluid className="text-light bg-dark">
                 <Container>
                     <h3>Enjoy shopping with Kroger!!</h3>
-                    <Form onSubmit={handleFormSubmit}>
+                    <Form>
                         <Form.Row>
                             <Col xs={12} md={5}>
                                 <Form.Control
@@ -63,9 +64,9 @@ const SearchItems = () => {
                                 />
                             </Col>
                             <Col xs={12} md={5}>
-                                <Button type="submit" variant="success" size="lg">
+                                {/* <Button type="submit" variant="success" size="lg">
                                     Submit Search
-                                </Button>
+                                </Button> */}
                             </Col>
                         </Form.Row>
                     </Form>
@@ -77,7 +78,14 @@ const SearchItems = () => {
                     {searchedItems.length
                         ? `Viewing ${searchedItems.length} results:`
                         : "Search for an item to begin"}
+
                 </h5>
+                <div>
+                    {searchedItems.map(item => 
+                        <p key={item.productId}>
+                            {item.description}
+                        </p>)}
+                </div>
             </Container>
         </>
     );
