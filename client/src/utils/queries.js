@@ -1,4 +1,5 @@
-import gql from 'graphql-tag';
+
+import gql from "graphql-tag";
 
 export const GET_ME = gql`
     {
@@ -19,18 +20,6 @@ export const GET_ME = gql`
     }
 `;
 
-export const GET_ALL_PRODUCTS = gql`
-    {
-        product {
-            _id
-            name
-            description
-            image
-            price
-            quantity
-        }
-    }
-`;
 
 export const KROGER_SEARCH = gql`
     query krogerSearch($term: String!) {
@@ -38,6 +27,7 @@ export const KROGER_SEARCH = gql`
                 productId
                 description
                 category
+                image
         }
     }
 `
