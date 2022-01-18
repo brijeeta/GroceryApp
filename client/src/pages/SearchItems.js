@@ -66,12 +66,12 @@ const SearchItems = () => {
 
     return (
         <>
-            <Jumbotron fluid className="text-light bg-dark">
+            <Jumbotron fluid className="text-light bg-info">
                 <Container>
                     <h3>Enjoy shopping with Kroger!!</h3>
                     <Form>
                         <Form.Row>
-                            <Col xs={12} md={5}>
+                            <Col xs={12} md={7}>
                                 <Form.Control
                                     name="searchInput"
                                     value={searchInput}
@@ -101,7 +101,7 @@ const SearchItems = () => {
                 <CardColumns>
                     {searchedItems.map((item) => {
                         return (
-                            <Card key={item.productId} border="dark">
+                            <Card key={item.productId} border="info">
                                 {item.image ? (
                                     <Card.Img
                                         src={item.image}
