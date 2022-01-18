@@ -11,16 +11,20 @@ import {
 import { saveProductIds, getSavedProductIds } from "../utils/localStorage";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { SAVE_PRODUCT } from "../utils/mutations";
-import { GET_ME, KROGER_SEARCH } from "../utils/queries";
+import { KROGER_SEARCH } from "../utils/queries";
+
+import Auth from "../utils/auth";
 
 const SearchItems = () => {
-    const [saveProduct] = useMutation(SAVE_PRODUCT);
+    // create state for holding returned kroger api data
+
     const [searchInput, setSearchInput] = useState("");
     const { loading, data } = useQuery(KROGER_SEARCH, {
-        variables: {term: searchInput}
+        variables: { term: searchInput }
     });
     const searchedItems = data?.krogerSearch || [];
     console.log(data);
+
     const [savedProductIds, setSavedProductIds] = useState(getSavedProductIds());
 
     useEffect(() => {
@@ -28,23 +32,37 @@ const SearchItems = () => {
     });
 
 
-    // create method to search for items and set state on form submit
-    // const handleFormSubmit = async (event) => {
-    //     event.preventDefault();
+    const [saveProduct, { error }] = useMutation(SAVE_PRODUCT);
 
-    //     if (!searchInput) {
-    //         return false;
-    //     }
+    // create function to handle saving a book to our database
+    const handleSaveProduct = async (productId) => {
+        // find the book in `searchedBooks` state by the matching id
+        const productToSave = searchInput.find((item) => item.productId === productId);
 
-    //     try {
+        // get token
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    //         setSearchInput('');
+        if (!token) {
+            return false;
+        }
 
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // };
+        try {
+            const response = await saveProduct({
+                variables: {
+                    input: productToSave,
+                },
+            });
 
+            if (!response) {
+                throw new Error("something went wrong!");
+            }
+
+            // if product successfully saves to user's account, save book id to state
+            setSavedProductIds([...savedProductIds, productToSave.productId]);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
         <>
@@ -80,15 +98,40 @@ const SearchItems = () => {
                         : "Search for an item to begin"}
 
                 </h5>
-                <div>
-                    {searchedItems.map(item => 
-                        <p key={item.productId}>
-                            {item.description} <br />
-                            {item.category}
-                        </p>
-
-                    )}
-                </div>
+                <CardColumns>
+                    {searchedItems.map((item) => {
+                        return (
+                            <Card key={item.productId} border="dark">
+                                {item.image ? (
+                                    <Card.Img
+                                        src={item.image}
+                                        alt={`The cover for ${item.description}`}
+                                        variant="top"
+                                    />
+                                ) : null}
+                                <Card.Body>
+                                    <Card.Title>{item.productId}</Card.Title>
+                                    <Card.Text>{item.description}</Card.Text>
+                                    {Auth.loggedIn() && (
+                                        <Button
+                                            disabled={savedProductIds?.some(
+                                                (savedProductId) => savedProductId === item.productId
+                                            )}
+                                            className="btn-block btn-info"
+                                            onClick={() => handleSaveProduct(item.productId)}
+                                        >
+                                            {savedProductIds?.some(
+                                                (savedProductId) => savedProductId === item.productId
+                                            )
+                                                ? "This product has already been saved!"
+                                                : "Add to Cart"}
+                                        </Button>
+                                    )}
+                                </Card.Body>
+                            </Card>
+                        );
+                    })}
+                </CardColumns>
             </Container>
         </>
     );
