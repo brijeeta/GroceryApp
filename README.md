@@ -5,3 +5,5 @@ Link to Document: https://docs.google.com/document/d/1kwBdnf0DL_qIl7YCyzcxlXTUZJ
 Link to wireframe: https://miro.com/app/board/uXjVOXGxXQo=/
 
 Link to Presentation: https://docs.google.com/presentation/d/1RsL4y4yjDnDK8GJxemVZZU6PIVxNioqBRGT5yZa8ODQ/edit?usp=sharing
+
+Link to Deployed App: https://grocery-app-project3.herokuapp.com/
