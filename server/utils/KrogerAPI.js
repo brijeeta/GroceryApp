@@ -25,7 +25,7 @@ const krogerFetch = async (term) => {
     const token = await krogerAuth();
     const response = await axios({
         method: 'get',
-        url: `https://api.kroger.com/v1/products?filter.limit=10&filter.term=${term}`,
+        url: `https://api.kroger.com/v1/products?filter.limit=1&filter.term=${term}`,
         headers: { 'Accept': 'application/json',
             'Authorization': `Bearer ${token}`}   
     });
