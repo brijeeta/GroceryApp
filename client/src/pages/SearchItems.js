@@ -23,7 +23,7 @@ const SearchItems = () => {
         variables: { term: searchInput }
     });
     const searchedItems = data?.krogerSearch || [];
-    console.log(data);
+    //console.log(data);
 
     const [savedProductIds, setSavedProductIds] = useState(getSavedProductIds());
 
@@ -110,8 +110,8 @@ const SearchItems = () => {
                                     />
                                 ) : null}
                                 <Card.Body>
-                                    <Card.Title>{item.productId}</Card.Title>
-                                    <Card.Text>{item.description}</Card.Text>
+                                    {/* <Card.Title>{item.productId}</Card.Title> */}
+                                    <Card.Title>{item.description}</Card.Title>
                                     {Auth.loggedIn() && (
                                         <Button
                                             disabled={savedProductIds?.some(
