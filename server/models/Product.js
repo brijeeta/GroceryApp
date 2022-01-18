@@ -5,26 +5,14 @@ const { StringDecoder } = require('string_decoder');
 const { Schema } = mongoose;
 
 const productSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true
+    productId: {
+        type: String
     },
     description: {
         type: String
     },
     image: {
         type: String
-    },
-    price: {
-        type: Number,
-        required: true,
-        min: 0.01
-    },
-    quantity: {
-        type: Number,
-        min: 0,
-        default: 0
     },
     Category: {
         type: String,
