@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
+const Product = require('./Product');
 const bcrypt = require('bcrypt');
 const List = require('./List');
 
@@ -20,7 +21,13 @@ const userSchema = new Schema({
         required: true,
         minlength: 5
     },
-    lists: [List.schema]
+    savedProducts: [Product.schema],
+
+    productCount: {
+        type: Number
+    }
+
+
 });
 
 // set up pre-save middleware to create password

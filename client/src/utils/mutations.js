@@ -26,21 +26,19 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_PRODUCT = gql`
-  mutation saveProduct($product: SavedProductInput!) {
-    saveProduct(product: $product) {
-      username
-      email
-      lists {
-        products {
-          name
-          description
-          price
-          quantity
-          image
-        }
-      }
-    }
+  mutation saveProduct($input: SavedProductInput) {
+  saveProduct(input: $input) {
+    username
+    email
+    productCount
+    savedProducts{
+    description
+      image
+      category
+      productId       
+  } 
   }
+}
 `;
 
 export const DELETE_PRODUCT = gql`
